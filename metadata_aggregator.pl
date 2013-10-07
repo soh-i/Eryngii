@@ -8,8 +8,10 @@ use HTTP::Request::Common;
 use XML::Simple;
 
 
-my $ID = 'GSM914117';
-print retrieve_data($ID);
+my @IDs = qw/GSM914117 GSM693746 GSM693747/;
+for (@IDs) {
+    print retrieve_data($_);
+}
 
 
 sub __fetch_xml_from_GEO {
@@ -31,7 +33,7 @@ sub retrieve_data {
     my $GEO_ID = shift;
     my $xml = XML::Simple->new();
     my $row = $xml->XMLin(__fetch_xml_from_GEO($GEO_ID));
-
+    
     my $GSM = $row->{Sample}->{iid};
     my $sp = $row->{Sample}->{Channel}->{Organism}->{content};
     my $strain = _clean_up_data($row->{Sample}->{Channel}->{Characteristics}->[0]->{content});
@@ -59,5 +61,5 @@ sub _get_SRX_ID {
     my ($url) = @_;
     $url =~ m/\?term\=(SRX\d+)$/;
     return $1;
-}
+};
 
