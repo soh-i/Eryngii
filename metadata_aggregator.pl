@@ -8,12 +8,46 @@ use LWP::UserAgent;
 use HTTP::Request::Common;
 use XML::Simple;
 
-my @IDs = qw/GSM914117 GSM693746 GSM693747/;
-for (@IDs) {
-    print __fetch_xml_from_GEO($_);
+#my @IDs = qw/G4117 GSM693746 GSM693747/;
+#for (@IDs) {
+#    print __fetch_xml_from_GEO($_);
+#}
+
+fetch_xml_from_GSE('GSE37232');
+
+sub fetch_xml_from_GSE {
+    my $ID = shift;
+    croak("Error: GSE ID is lacked") unless $ID;
+    
+    my $url = 'http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi';
+    my %param = ('acc'  => $ID,
+                 'targ' => 'series',
+                 'form' => 'xml',
+                 'view' => 'full',
+                );
+    
+    my $req = POST($url, \%param);
+    my $ua = LWP::UserAgent->new();
+    my $res = $ua->request($req);
+    my $data = $res->content();
+    
+    my $xml = XML::Simple->new(forcearray=>0);
+    my $row = $xml->XMLin($data);
+    
+    my $title = $row->{Series}->{Title};
+    my $GSE_ID = $row->{Series}->{Accession};
+    my $PMID = $row->{Series}->{"Pubmed-ID"};
+    
+    for my $i (@{$row->{Series}->{"Supplementary-Data"} }) {
+        print $i->{content};
+    }
+
+    for my $GSM (@{$row->{Series}->{"Sample-Ref"}}) {
+        #print $GSM->{ref}, "\n";
+    }
 }
 
-sub __fetch_xml_from_GEO {
+sub fetch_xml_from_GSM {
     my $ID = shift;
     if (!$ID) {
         croak("Error: GEO is not found");
