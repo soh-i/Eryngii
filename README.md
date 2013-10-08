@@ -1,4 +1,4 @@
-Matsutake
+Eryngii
 =========
 
-Matsutake: Metadata aggregator for GEO/SRA
+Eryngii: Metadata aggregator for GEO/SRA
