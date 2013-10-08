@@ -2,20 +2,22 @@
 
 use strict;
 use warnings;
+use Carp;
 use Data::Dumper;
 use LWP::UserAgent;
 use HTTP::Request::Common;
 use XML::Simple;
 
-
 my @IDs = qw/GSM914117 GSM693746 GSM693747/;
 for (@IDs) {
-    print retrieve_data($_);
+    print __fetch_xml_from_GEO($_);
 }
-
 
 sub __fetch_xml_from_GEO {
     my $ID = shift;
+    if (!$ID) {
+        croak("Error: GEO is not found");
+    }
     
     my $url = 'http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi';
     my %param = ('acc'  => $ID,
@@ -27,12 +29,9 @@ sub __fetch_xml_from_GEO {
     my $ua = LWP::UserAgent->new();
     my $res = $ua->request($req);
     my $data = $res->content();
-};
-
-sub retrieve_data {
-    my $GEO_ID = shift;
+    
     my $xml = XML::Simple->new();
-    my $row = $xml->XMLin(__fetch_xml_from_GEO($GEO_ID));
+    my $row = $xml->XMLin($data);
     
     my $GSM = $row->{Sample}->{iid};
     my $sp = $row->{Sample}->{Channel}->{Organism}->{content};
@@ -62,4 +61,3 @@ sub _get_SRX_ID {
     $url =~ m/\?term\=(SRX\d+)$/;
     return $1;
 };
-
