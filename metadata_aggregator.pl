@@ -13,7 +13,7 @@ use XML::Simple;
 #    print __fetch_xml_from_GEO($_);
 #}
 
-fetch_xml_from_GSE('GSE37232');
+print fetch_xml_from_GSE('GSE37232');
 
 sub fetch_xml_from_GSE {
     my $ID = shift;
@@ -34,17 +34,22 @@ sub fetch_xml_from_GSE {
     my $xml = XML::Simple->new(forcearray=>0);
     my $row = $xml->XMLin($data);
     
-    my $title = $row->{Series}->{Title};
-    my $GSE_ID = $row->{Series}->{Accession};
-    my $PMID = $row->{Series}->{"Pubmed-ID"};
     
+    my $title = "Title:" . "\"" . $row->{Series}->{Title} . "\"";
+    my $GSE_ID = "GSE:". $row->{Series}->{Accession}->{content};
+    my $PMID = "PMID:" . $row->{Series}->{"Pubmed-ID"};
+        
     for my $i (@{$row->{Series}->{"Supplementary-Data"} }) {
-        print $i->{content};
+        #print $i->{content};
     }
-
+    my @GSMs = qw//;
     for my $GSM (@{$row->{Series}->{"Sample-Ref"}}) {
-        #print $GSM->{ref}, "\n";
+        push @GSMs, $GSM->{ref};
     }
+    my $joined_GSM_ID = "GSMIDs:".join ",", @GSMs;
+    
+    my $to_LTSV = sprintf "%s\t%s\t%s\t%s\n", $title, $GSE_ID, $PMID, $joined_GSM_ID;
+    return $to_LTSV;
 }
 
 sub fetch_xml_from_GSM {
