@@ -12,6 +12,10 @@ use HTML::TreeBuilder;
 use lib qw{./lib/};
 use Metadata::Utils;
 
+use base q/Exporter/;
+our @EXPORT = qw/iid sp strain tissue age time_points gender lib_strategy
+                 platform srx_id fastq_links/;
+
 sub new {
     my $class = shift;
     my $id    = shift;
