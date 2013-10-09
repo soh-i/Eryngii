@@ -2,18 +2,22 @@
 use strict;
 use warnings;
 use Data::Dumper;
+use Perl6::Say;
 
 use lib qw{./lib};
 use Metadata::GSE;
+use Metadata::GSM;
 
-my $fetch_xml = Metadata::GSE->new("GSE37232");
-print $fetch_xml->title();
-print $fetch_xml->pmid();
-print $fetch_xml->gse_id();
-print $fetch_xml->supp_data();
-print $fetch_xml->gsm_ids();
+my $gse_xml = Metadata::GSE->new("GSE32950");
+say $gse_xml->title();
+say $gse_xml->pmid();
+say $gse_xml->gse_id();
+say $gse_xml->supp_data();
+say $gse_xml->gsm_ids();
 
-
-
-
+my $gsm = Metadata::GSM->new("GSM914095");
+say $gsm->iid();
+say $gsm->sp();
+say $gsm->strain();
+say $gsm->tissue();
 

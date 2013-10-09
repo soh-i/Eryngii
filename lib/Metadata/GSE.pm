@@ -30,7 +30,6 @@ sub new {
     bless $self, $class;
 }
 
-
 sub title {
     my $self = shift;
     my $title = "Title:" . "\"" . $self->{XML}->{Series}->{Title} . "\"";
