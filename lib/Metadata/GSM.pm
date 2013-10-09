@@ -29,6 +29,11 @@ sub new {
     bless $self, $class;
 }
 
+sub DESTROY {
+    my $self = shift;
+}
+
+
 sub iid {
     my $self = shift;
     $self->{XML}->{Sample}->{iid};
@@ -79,5 +84,12 @@ sub _get_SRX_ID {
     $url =~ m/\?term\=(SRX\d+)$/;
     return $1;
 }
+
+sub AUTOLOAD {
+    our $AUTOLOAD;
+    my (@args) = @_;
+    croak "Called $AUTOLOAD is not found";
+};
+
 
 1;
