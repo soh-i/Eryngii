@@ -5,19 +5,12 @@ use Data::Dumper;
 use Perl6::Say;
 
 use lib qw{./lib};
-use Metadata::GSE;
-use Metadata::GSM;
+use Metadata::Generator;
 
-my $gse_xml = Metadata::GSE->new("GSE32950");
-say $gse_xml->title();
-say $gse_xml->pmid();
-say $gse_xml->gse_id();
-say $gse_xml->supp_data();
-say $gse_xml->gsm_ids();
+my $gse = Metadata::Generator->new('GSE28040');
+say $gse->pmid();
+say $gse->title();
+say scalar $gse->supp_data();
+say scalar $gse->to_gsm_ids();
 
-my $gsm = Metadata::GSM->new("GSM914095");
-say $gsm->iid();
-say $gsm->sp();
-say $gsm->strain();
-say $gsm->tissue();
-
+my $gsm = Metadata::GEO::GSM->new(@);
