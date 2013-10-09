@@ -6,6 +6,9 @@ use Carp;
 use LWP::Simple;
 use HTTP::Request::Common;
 use XML::Simple;
+use Net::FTP;
+use HTML::TreeBuilder;
+
 use Metadata::Utils;
 
 
@@ -17,8 +20,6 @@ sub new {
                 GSMID => $id,
                 URL => 'http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi',
                };
-    
-    my $url = 'http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi';
     
     my $params = {'acc'  => $self->{GSMID},
                 'form' => 'xml',
@@ -32,7 +33,6 @@ sub new {
 sub DESTROY {
     my $self = shift;
 }
-
 
 sub iid {
     my $self = shift;
@@ -64,8 +64,14 @@ sub gender {
    _clean_up_data($self->{XML}->{Sample}->{Channel}->{Characteristics}->[3]->{content});
 }
 
+sub time_points {
+    my $self = shift;
+    _clean_up_data($self->{XML}->{Sample}->{Channel}->{Characteristics}->[4]->{content});
+}
+
 sub lib_strategy {
     my $self = shift;
+    $self->{XML}->{Sample}->{"Library-Strategy"};
     
 }
 
@@ -74,9 +80,42 @@ sub platform {
    $self->{XML}->{Sample}->{'Instrument-Model'}->{Predefined};
 }
 
-sub srx_ids {
+sub srx_id {
     my $self = shift;
     _get_SRX_ID($self->{XML}->{Sample}->{Relation}->[0]->{target});
+}
+
+sub fastq_links {
+    my $self = shift;
+    my $id   = shift;
+    
+    # Access to DDBJ SRA search and parse to get fq links
+    my $base_url = 'http://trace.ddbj.nig.ac.jp/DRASearch/experiment';
+    my %param = (acc => $id);
+    my $req = POST($base_url, \%param);
+    my $ua = LWP::UserAgent->new();
+    my $res = $ua->request($req);
+    
+    my $fq_link = qw//;
+    if ($res->is_success()) {
+        my $tree = HTML::TreeBuilder->new();
+        $tree->parse($res->content());
+        for my $tag ($tree->look_down('class', 'navigation')->find('a')) {
+            if ($tag->as_text() =~ m/^FASTQ\s$/ ) {
+                $fq_link = ($tag->attr("href"));
+            }
+        }
+    } elsif ($res->is_error()) {
+        croak("HTTP error: ", $res->status_line());
+    }
+    
+    # Establish FTP connection and list of fq files
+    my $host = 'ftp.ddbj.nig.ac.jp';
+    (my $mod_link = $fq_link) =~ s/^ftp\:\/{2}ftp\.ddbj\.nig\.ac\.jp\///;
+    my $ftp = Net::FTP->new($host, Timeout=>30) or die();
+    $ftp->login('anonymous', '');
+    
+    return map{$host . '/' . $_ . ','}$ftp->ls($mod_link);
 }
 
 sub _get_SRX_ID {
