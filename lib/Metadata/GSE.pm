@@ -15,7 +15,7 @@ sub new {
     my $id    = shift;
     
     if (not _is_GSE($id)) {
-        croak("Error: Invalid GSE ID is given");
+        croak("Error: $id is invalid GSE ID");
     }
     
     my $self = {
@@ -32,11 +32,21 @@ sub new {
     my $req = POST($self->{URL}, \%param);
     my $ua = LWP::UserAgent->new();
     my $res = $ua->request($req);
-    my $data = $res->content();
+    
+    my $data = ();
+    if ($res->is_success) {
+        $data = $res->content();
+    } elsif ($res->is_error()) {
+        croak("HTTP Request error: ", $res->status_line());
+    }
     
     my $xml = XML::Simple->new(forcearray=>0);
-    my $row = $xml->XMLin($data);
-    $self->{XML} = $row;
+    eval {
+        $self->{XML} = $xml->XMLin($data);
+    };
+    if ($@) {
+        croak("XML::Simple error: invalid XML content maybe given");
+    }
     
     bless $self, $class;
 }
