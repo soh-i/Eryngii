@@ -7,6 +7,9 @@ use Data::Dumper;
 
 use lib qw{./lib/};
 use Metadata::Utils;
+use base q/Exporter/;
+our @EXPORT = qw/title to_gsm_ids pmid supp_data gsm_ids/;
+
 
 sub new {
     my $class = shift;
@@ -20,12 +23,12 @@ sub new {
                 GSEID => $id,
                 URL => 'http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi',
                };
-    
+
     my $params = {'acc'  => $self->{GSEID},
-                 'targ' => 'series',
-                 'form' => 'xml',
-                 'view' => 'full',
-                };
+                  'targ' => 'series', #targ => 'gsm' # ALL SAMPLE.xml
+                  'form' => 'xml',
+                  'view' => 'full',
+                 };
     
     $self->{XML} = _fetch_xml(id=>$self->{GSE_ID}, url=>$self->{URL}, post_params=>$params);
     bless $self, $class;
@@ -39,7 +42,7 @@ sub title {
 
 sub gse_id{ 
     my $self = shift;
-    my $GSE_ID = "GSE:". $self->{XML}->{Series}->{Accession}->{content};
+    my $GSE_ID = "GSE:" . $self->{XML}->{Series}->{Accession}->{content};
     return $GSE_ID;
 }
 
@@ -55,11 +58,15 @@ sub supp_data {
     for my $i (@{$self->{XML}->{Series}->{"Supplementary-Data"} }) {
         push @Supdata, _clean_up_data($i->{content});
     }
-    my $joined_Suppdata = "SuppData:".join ",", @Supdata;
-    return $joined_Suppdata;
+    if (wantarray) {
+        return @Supdata;
+    } else {
+        my $joined_Suppdata = "SuppData:" . join ",", @Supdata;
+        return $joined_Suppdata;
+    }
 }
 
-sub gsm_ids {
+sub to_gsm_ids {
     my $self = shift;
     my @GSMs = qw//;
     for my $GSM (@{$self->{XML}->{Series}->{"Sample-Ref"}}) {
@@ -68,9 +75,8 @@ sub gsm_ids {
     if (wantarray) {
         return @GSMs;
     } else {
-        return "GSMIDs:".join ",", @GSMs;
+        return "GSMIDs:" . join ",", @GSMs;
     }
 }
-
 
 1;
