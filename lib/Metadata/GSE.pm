@@ -8,6 +8,8 @@ use LWP::UserAgent;
 use HTTP::Request::Common;
 use XML::Simple;
 
+use Metadata::Utils;
+
 sub new {
     my $class = shift;
     my $id    = shift;
@@ -73,6 +75,7 @@ sub gsm_ids {
     return $joined_GSM_ID;
 }
 
+=pod
 sub __clean_up_data {
     my ($data) = @_;
     if ($data) {
@@ -80,7 +83,7 @@ sub __clean_up_data {
         return $c;
     }
 };
-
+=cut
 
 1;
 
