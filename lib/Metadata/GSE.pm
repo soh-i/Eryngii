@@ -14,6 +14,10 @@ sub new {
     my $class = shift;
     my $id    = shift;
     
+    if (not _is_GSE($id)) {
+        croak("Error: Invalid GSE ID is given");
+    }
+    
     my $self = {
                 GSEID => $id,
                 URL => 'http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi',
@@ -59,7 +63,7 @@ sub supp_data {
     my $self = shift;
     my @Supdata = qw//;
     for my $i (@{$self->{XML}->{Series}->{"Supplementary-Data"} }) {
-        push @Supdata, __clean_up_data($i->{content});
+        push @Supdata, _clean_up_data($i->{content});
     }
     my $joined_Suppdata = "SuppData:".join ",", @Supdata;
     return $joined_Suppdata;
@@ -75,19 +79,5 @@ sub gsm_ids {
     return $joined_GSM_ID;
 }
 
-=pod
-sub __clean_up_data {
-    my ($data) = @_;
-    if ($data) {
-        (my $c = $data) =~ s/(\n)|(\s+$)|(^\s+)//g;
-        return $c;
-    }
-};
-=cut
 
 1;
-
-#my $to_LTSV = sprintf "%s\t%s\t%s\t%s\%s\n", $title, $GSE_ID, $PMID, $joined_GSM_ID, $joined_Suppdata;
-#return $to_LTSV;
-
-
