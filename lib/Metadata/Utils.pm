@@ -6,7 +6,7 @@ use Carp;
 use LWP::UserAgent;
 use HTTP::Request::Common;
 use XML::Simple;
-
+use lib qw{./lib/};
 use base q/Exporter/;
 our @EXPORT = qw/_clean_up_data
                  _is_GSE
@@ -45,14 +45,14 @@ sub _fetch_xml {
 }
 
 sub _is_GSE {
-    my $id = shift;
+    my $id = shift or croak();
     if ($id =~ m/^GSE\d{5}$/) {
         return 1;
     }
 }
 
 sub _is_GSM {
-    my $id = shift;
+    my $id = shift or croak();
     if ($id =~ m/^GSM\d{4}$/) {
         return 1;
     }
@@ -65,8 +65,6 @@ sub _clean_up_data {
         return $c;
     }
 };
-
-
 
 1;
 

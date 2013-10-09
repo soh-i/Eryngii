@@ -1,4 +1,4 @@
-package Metadata::GSM;
+package Metadata::GEO::GSM;
 
 use strict;
 use warnings;
@@ -9,8 +9,8 @@ use XML::Simple;
 use Net::FTP;
 use HTML::TreeBuilder;
 
+use lib qw{./lib/};
 use Metadata::Utils;
-
 
 sub new {
     my $class = shift;

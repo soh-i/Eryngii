@@ -1,10 +1,11 @@
-package Metadata::GSE;
+package Metadata::GEO::GSE;
 
 use strict;
 use warnings;
 use Carp;
 use Data::Dumper;
 
+use lib qw{./lib/};
 use Metadata::Utils;
 
 sub new {
