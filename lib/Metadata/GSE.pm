@@ -64,8 +64,11 @@ sub gsm_ids {
     for my $GSM (@{$self->{XML}->{Series}->{"Sample-Ref"}}) {
         push @GSMs, $GSM->{ref};
     }
-    my $joined_GSM_ID = "GSMIDs:".join ",", @GSMs;
-    return $joined_GSM_ID;
+    if (wantarray) {
+        return @GSMs;
+    } else {
+        return "GSMIDs:".join ",", @GSMs;
+    }
 }
 
 
