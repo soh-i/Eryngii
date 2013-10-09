@@ -5,13 +5,8 @@ use warnings;
 use Carp;
 
 sub new {
-    my ($self, $args) = @_;
-    bless $args, $self;
-}
-
-sub load {
-    my ($self) = @_;
-    return $self;
+    my ($class, $args) = @_;
+    bless $class, $arrgs;
 }
 
 1;
