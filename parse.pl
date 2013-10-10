@@ -10,7 +10,5 @@ my $ep = Excel::Parser->new(
                             sheet=>"1471-2164-14-206-s5.csv",
                             format=>'xls'
                            );
-#print $ep->file(), "\n";
-#print $ep->sheet(), "\n";
-print Dumper $ep->to_csv();
+$ep->to_csv();
 
