@@ -5,6 +5,8 @@ use warnings;
 use Carp;
 use Spreadsheet::ParseExcel;
 use Spreadsheet::XLSX;
+use IO::File;
+use File::Basename qw/fileparse/;
 
 use lib qw{./lib/};
 use base q/Exporter/;
@@ -45,13 +47,21 @@ sub format {
     return $self->{format};
 }
 
+sub _name_without_ext {
+    my $file = shift;
+    (my $file_name) = fileparse($file, qr/\..*$/);
+    return $file_name;
+}
+
 sub to_csv {
     my $self = shift;
     
     if ($self->{format} eq 'xls') {
+        unlink _name_without_ext($self->{file}) . '.csv' if -f _name_without_ext($self->{file}) . '.csv';
         _xls($self);
     }
     elsif ($self->{format} eq 'xlsx') {
+        unlink _name_without_ext($self->{file}) . '.csv' if -f _name_without_ext($self->{file}) . '.csv';
         _xlsx($self);
     }
 }
@@ -64,15 +74,14 @@ sub to_ltsv {
 sub _xls {
     my $self = shift;
     
-    my $aggregated = [];
-    my $parser     = Spreadsheet::ParseExcel->new();
-    my $workbook   = $parser->parse($self->{file});
+    my $parser   = Spreadsheet::ParseExcel->new();
+    my $workbook = $parser->parse($self->{file});
     
     if (!defined $workbook) {
         croak("Error: $parser->error()");
     }
     
-    my $i = 0;
+    my $io = IO::File->new(_name_without_ext($self->{file}) . '.csv', 'a');
     foreach my $worksheet ($workbook->worksheet($self->{sheet})) {
         my ($row_min, $row_max) = $worksheet->row_range();
         my ($col_min, $col_max) = $worksheet->col_range();
@@ -81,25 +90,23 @@ sub _xls {
             foreach my $col ($col_min .. $col_max){
                 my $cell = $worksheet->get_cell($row, $col);
                 if ($cell) {
-                    push $aggregated, [$i];
-                    push $aggregated->[$i], $cell->value() . ',';
+                    $io->print($cell->value() . ',');
                 } else {
-                    push $aggregated, [$i];
-                    push $aggregated->[$i], ',';
+                    $io->print(',');
                 }
             }
-            $i++;
+            $io->print("\n");
         }
     }
-    return $aggregated;
+    $io->close();
 }
 
 sub _xlsx {
     my $self = shift;
     
-    my $aggregated_x = ();
     my $excel = Spreadsheet::XLSX->new($self->{file});
-
+    
+    my $io = IO::File->new(_name_without_ext($self->{file}) . '.csv', 'a');
     foreach my $sheet (@{ $excel->{Worksheet} }) {
         if ($sheet->{Name} eq $self->{sheet}) {
             $sheet->{MaxRow} ||= $sheet->{MinRow};
@@ -109,14 +116,13 @@ sub _xlsx {
                 foreach my $col ($sheet->{MinCol} ..  $sheet->{MaxCol}) {
                     my $cell = $sheet->{Cells}->[$row]->[$col];
                     if ($cell) {
-                        $aggregated_x .= $cell->{Val}.',';
+                        $io->print($cell->{Val}.',');
                     }
                 }
-                $aggregated_x .= "\n";
+                $io->print("\n");
             }
         }
     }
-    return $aggregated_x;
 }
 
 1;
