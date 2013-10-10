@@ -32,14 +32,17 @@ sub new {
 
 sub file {
     my $self = shift;
-    
     return $self->{file};
 };
 
 sub sheet {
     my $self = shift;
-    
     return $self->{sheet};
+}
+
+sub format {
+    my $self = shift;
+    return $self->{format};
 }
 
 sub to_csv {
@@ -61,28 +64,31 @@ sub to_ltsv {
 sub _xls {
     my $self = shift;
     
-    my $aggregated = ();
+    my $aggregated = [];
     my $parser     = Spreadsheet::ParseExcel->new();
     my $workbook   = $parser->parse($self->{file});
     
     if (!defined $workbook) {
         croak("Error: $parser->error()");
     }
-
+    
+    my $i = 0;
     foreach my $worksheet ($workbook->worksheet($self->{sheet})) {
         my ($row_min, $row_max) = $worksheet->row_range();
         my ($col_min, $col_max) = $worksheet->col_range();
-
+        
         foreach my $row ($row_min .. $row_max){
             foreach my $col ($col_min .. $col_max){
                 my $cell = $worksheet->get_cell($row, $col);
                 if ($cell) {
-                    $aggregated .= $cell->value().',';
+                    push $aggregated, [$i];
+                    push $aggregated->[$i], $cell->value() . ',';
                 } else {
-                    $aggregated .= ',';
+                    push $aggregated, [$i];
+                    push $aggregated->[$i], ',';
                 }
             }
-            $aggregated .= "\n";
+            $i++;
         }
     }
     return $aggregated;
