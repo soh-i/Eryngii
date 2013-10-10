@@ -34,7 +34,7 @@ sub new {
 
 sub file {
     my $self = shift;
-    return $self->{file};
+    return _name_without_ext($self->{file});
 };
 
 sub sheet {
