@@ -3,21 +3,32 @@ Eryngii
 
 Eryngii: Metadata aggregator for GEO/SRA
 
-![](http://p7.storage.canalblog.com/75/92/290470/30842278_p.jpg)
+## Dependencies
+* Spreadsheet::ParseExcel == 0.59
+* Spreadsheet::XLSX == 0.13
+* Net::FTP.pm: == 2.78
+* LWP::Simple == 2.20
+* LWP::UserAgent == 6.05
+* HTML::TreeBuilder == 5.03
+* HTTP::Request::Common == 6.04
 
 ## Usage
-```perl
-#!/usr/bin/env perl
-use strict;
-use warnings;
-use Data::Dumper;
-use lib qw{./lib};
-use Metadata::GSE;
+### Convert excel file to LTSV.
+* For Rodriguez, 2013.
 
-my $fetch_xml = Metadata::GSE->new("GSE37232");
-print $fetch_xml->title();
-print $fetch_xml->pmid();
-print $fetch_xml->gse_id();
-print $fetch_xml->supp_data();
-print $fetch_xml->gsm_ids();
+```perl
+use lib qw{./lib};
+use Excel::Parser;
+use Generator::FruitFly::Rodriguez;
+my $ep = Excel::Parser->new(
+                            file => "mmc1.xls",
+                            sheet => "Table_S1",
+                            format => 'xls'
+                           );
+$ep->to_csv();
+my $gen = Generator::FruitFly::Rodriguez->parse($ep->file());
+for my $id ($gen->iter()) {
+    print $gen->to_ltsv($id);
+}
 ```
+
