@@ -15,12 +15,13 @@ my $ep = Excel::Parser->new(
                            );
 $ep->to_csv();
 
-my $gen = Generator::FruitFly::Rodriguez->parse($ep->file().'.csv');
+my $gen = Generator::FruitFly::Rodriguez->parse($ep->file());
 for my $id ($gen->iter()) {
-    print $gen->gene($id), "\t";
-    print $gen->position($id), "\t";
-    print $gen->chromosome($id), "\t";
-    print $gen->region($id), "\t";
-    print $gen->coverage($id), "\n";
+    print $gen->to_ltsv($id);
+    #print $gen->gene($id), "\t";
+    #print $gen->position($id), "\t";
+    #print $gen->chromosome($id), "\t";
+    #print $gen->region($id), "\t";
+    #print $gen->coverage($id), "\n";
 }
 
