@@ -30,7 +30,7 @@ sub parse {
     my $file  = shift;
     
     my $self = ();
-    my $fh = IO::File->new($file) or croak "Internal Error: Can not open file:$!";
+    my $fh = IO::File->new($file.'.csv') or croak "Internal Error: Can not open $file.csv:$!";
     while (my $data_entory = $fh->getline) {
         next if __LINE__ == 1;
         my ($gene, $region, $chr, $pos, $cov, $pooled_edit)  = (split /\,/, $data_entory)[0,2,3,4,5,7];
@@ -49,6 +49,18 @@ sub parse {
 sub iter {
     my $self = shift;
     return keys %$self;
+}
+
+sub to_ltsv {
+    my $self = shift;
+    my $id   = shift;
+    
+    my $ltsv = 
+        sprintf("Gene:%s\tChr:%s\tPos:%s\tRegion:%s\tCoverage:%s\tEdit_ratio:%s\n",
+                $self->gene($id), $self->chromosome($id), $self->position($id), $self->region($id),
+                $self->coverage($id), $self->nascent_edit_ratio($id)
+               );
+    return $ltsv;
 }
 
 sub gene {
