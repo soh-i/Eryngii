@@ -13,4 +13,4 @@ say $gse->title();
 say scalar $gse->supp_data();
 say scalar $gse->to_gsm_ids();
 
-my $gsm = Metadata::GEO::GSM->new(@);
+#my $gsm = Metadata::GEO::GSM->new();
