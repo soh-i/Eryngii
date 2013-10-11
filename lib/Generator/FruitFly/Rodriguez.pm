@@ -51,6 +51,11 @@ sub iter {
     return keys %$self;
 }
 
+sub to_csv {
+    my $self = shift;
+    my $id = shift;
+}
+
 sub to_ltsv {
     my $self = shift;
     my $id   = shift;
