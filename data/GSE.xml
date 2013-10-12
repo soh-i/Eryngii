@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<MINiML
+   xmlns="http://www.ncbi.nlm.nih.gov/geo/info/MINiML"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.ncbi.nlm.nih.gov/geo/info/MINiML http://www.ncbi.nlm.nih.gov/geo/info/MINiML.xsd"
+   version="0.5.0" >
+
+  <Contributor iid="contrib1">
+    <Person><First>Joseph</First><Last>Rodriguez</Last></Person>
+    <Laboratory>Rosbash</Laboratory>
+    <Department>Biology</Department>
+    <Organization>Brandeis University</Organization>
+    <Address>
+      <Line>415 South Street</Line>
+      <City>Waltham</City>
+      <Zip-Code>02453</Zip-Code>
+      <Country>USA</Country>
+    </Address>
+  </Contributor>
+
+  <Contributor iid="contrib2">
+    <Person><First>Jerome</First><Middle>S</Middle><Last>Menet</Last></Person>
+  </Contributor>
+
+  <Contributor iid="contrib3">
+    <Person><First>Michael</First><Last>Rosbash</Last></Person>
+  </Contributor>
+
+  <Database iid="GEO">
+    <Name>Gene Expression Omnibus (GEO)</Name>
+    <Public-ID>GEO</Public-ID>
+    <Organization>NCBI NLM NIH</Organization>
+    <Web-Link>http://www.ncbi.nlm.nih.gov/geo</Web-Link>
+    <Email>geo@ncbi.nlm.nih.gov</Email>
+  </Database>
+
+  <Sample iid="GSM914095">
+    <Accession database="GEO">GSM914095</Accession>
+  </Sample>
+
+  <Sample iid="GSM914102">
+    <Accession database="GEO">GSM914102</Accession>
+  </Sample>
+
+  <Sample iid="GSM914103">
+    <Accession database="GEO">GSM914103</Accession>
+  </Sample>
+
+  <Sample iid="GSM914104">
+    <Accession database="GEO">GSM914104</Accession>
+  </Sample>
+
+  <Sample iid="GSM914105">
+    <Accession database="GEO">GSM914105</Accession>
+  </Sample>
+
+  <Sample iid="GSM914106">
+    <Accession database="GEO">GSM914106</Accession>
+  </Sample>
+
+  <Sample iid="GSM914107">
+    <Accession database="GEO">GSM914107</Accession>
+  </Sample>
+
+  <Sample iid="GSM914108">
+    <Accession database="GEO">GSM914108</Accession>
+  </Sample>
+
+  <Sample iid="GSM914109">
+    <Accession database="GEO">GSM914109</Accession>
+  </Sample>
+
+  <Sample iid="GSM914110">
+    <Accession database="GEO">GSM914110</Accession>
+  </Sample>
+
+  <Sample iid="GSM914111">
+    <Accession database="GEO">GSM914111</Accession>
+  </Sample>
+
+  <Sample iid="GSM914112">
+    <Accession database="GEO">GSM914112</Accession>
+  </Sample>
+
+  <Sample iid="GSM914113">
+    <Accession database="GEO">GSM914113</Accession>
+  </Sample>
+
+  <Sample iid="GSM914114">
+    <Accession database="GEO">GSM914114</Accession>
+  </Sample>
+
+  <Sample iid="GSM914115">
+    <Accession database="GEO">GSM914115</Accession>
+  </Sample>
+
+  <Sample iid="GSM914116">
+    <Accession database="GEO">GSM914116</Accession>
+  </Sample>
+
+  <Sample iid="GSM914117">
+    <Accession database="GEO">GSM914117</Accession>
+  </Sample>
+
+  <Sample iid="GSM914118">
+    <Accession database="GEO">GSM914118</Accession>
+  </Sample>
+
+  <Sample iid="GSM914119">
+    <Accession database="GEO">GSM914119</Accession>
+  </Sample>
+
+  <Sample iid="GSM915213">
+    <Accession database="GEO">GSM915213</Accession>
+  </Sample>
+
+  <Sample iid="GSM915214">
+    <Accession database="GEO">GSM915214</Accession>
+  </Sample>
+
+  <Sample iid="GSM915215">
+    <Accession database="GEO">GSM915215</Accession>
+  </Sample>
+
+  <Sample iid="GSM915216">
+    <Accession database="GEO">GSM915216</Accession>
+  </Sample>
+
+  <Sample iid="GSM915217">
+    <Accession database="GEO">GSM915217</Accession>
+  </Sample>
+
+  <Sample iid="GSM915218">
+    <Accession database="GEO">GSM915218</Accession>
+  </Sample>
+
+  <Sample iid="GSM915219">
+    <Accession database="GEO">GSM915219</Accession>
+  </Sample>
+
+  <Sample iid="GSM915220">
+    <Accession database="GEO">GSM915220</Accession>
+  </Sample>
+
+  <Sample iid="GSM915221">
+    <Accession database="GEO">GSM915221</Accession>
+  </Sample>
+
+  <Sample iid="GSM915222">
+    <Accession database="GEO">GSM915222</Accession>
+  </Sample>
+
+  <Sample iid="GSM915223">
+    <Accession database="GEO">GSM915223</Accession>
+  </Sample>
+
+  <Sample iid="GSM915224">
+    <Accession database="GEO">GSM915224</Accession>
+  </Sample>
+
+  <Sample iid="GSM915225">
+    <Accession database="GEO">GSM915225</Accession>
+  </Sample>
+
+  <Sample iid="GSM915226">
+    <Accession database="GEO">GSM915226</Accession>
+  </Sample>
+
+  <Series iid="GSE37232">
+    <Status database="GEO">
+      <Submission-Date>2012-04-12</Submission-Date>
+      <Release-Date>2012-05-31</Release-Date>
+      <Last-Update-Date>2013-05-23</Last-Update-Date>
+    </Status>
+    <Title>Nascent-seq indicates widespread cotranscriptional RNA editing in Drosophila</Title>
+    <Accession database="GEO">GSE37232</Accession>
+    <Pubmed-ID>22658416</Pubmed-ID>
+    <Summary>
+The RNA editing enzyme ADAR chemically modifies adenosine (A) to inosine (I), which is interpreted by the ribosome as a guanosine. Here we assess cotranscriptional A-to-I editing in Drosophila, by isolating nascent RNA from adult fly heads and subjecting samples to high-throughput sequencing. There are a large number of edited sites within nascent exons. Nascent RNA from an ADAR null mutant strain was also sequenced, indicating that almost all A-to-I events require ADAR. Moreover, mRNA editing levels correlate with editing levels within the cognate nascent RNA sequence, indicating that the extent of editing is set cotranscriptionally. Surprisingly, the nascent data also identify an excess of intronic over exonic editing sites. These intronic sites occur preferentially within introns that are poorly spliced cotranscriptionally, suggesting a link between editing and splicing. We conclude that ADAR-mediated editing is more widespread than previously indicated and largely occurs cotranscriptionally.
+    </Summary>
+    <Overall-Design>
+GSM914095: Fly genomic DNA sequencing. Sequenced on the Illumina GA II.
+GSM914102-GSM914113: Fly head nascent RNA profiles over 6 time points of a 12hr light:dark cycle in duplicate; sequenced on the Illumina GA II.
+GSM914114-GSM914119: Fly head nascent RNA profiles of yw, FM7, ADAR0 males in duplicate; sequenced on the HiSeq2000.
+GSM915213-GSM915214: Fly head mRNA profiles over 2 time points of a 12hr light:dark cycle; sequenced on the Illumina GA II.
+GSM915215-GSM915220: Fly head mRNA profiles over 6 time points of a 12hr light:dark cycle; paired-end sequenced on the Illumina GA II.
+GSM915221-GSM91526: Fly head mRNA profiles over 6 time points of a 12hr light:dark cycle; sequenced on the Illumina GA II.
+    </Overall-Design>
+    <Type>Expression profiling by high throughput sequencing</Type>
+    <Type>Other</Type>
+    <Contributor-Ref ref="contrib1" position="1" />
+    <Contributor-Ref ref="contrib2" position="2" />
+    <Contributor-Ref ref="contrib3" position="3" />
+    <Contact-Ref ref="contrib1" />
+    <Sample-Ref ref="GSM914095" />
+    <Sample-Ref ref="GSM914102" />
+    <Sample-Ref ref="GSM914103" />
+    <Sample-Ref ref="GSM914104" />
+    <Sample-Ref ref="GSM914105" />
+    <Sample-Ref ref="GSM914106" />
+    <Sample-Ref ref="GSM914107" />
+    <Sample-Ref ref="GSM914108" />
+    <Sample-Ref ref="GSM914109" />
+    <Sample-Ref ref="GSM914110" />
+    <Sample-Ref ref="GSM914111" />
+    <Sample-Ref ref="GSM914112" />
+    <Sample-Ref ref="GSM914113" />
+    <Sample-Ref ref="GSM914114" />
+    <Sample-Ref ref="GSM914115" />
+    <Sample-Ref ref="GSM914116" />
+    <Sample-Ref ref="GSM914117" />
+    <Sample-Ref ref="GSM914118" />
+    <Sample-Ref ref="GSM914119" />
+    <Sample-Ref ref="GSM915213" />
+    <Sample-Ref ref="GSM915214" />
+    <Sample-Ref ref="GSM915215" />
+    <Sample-Ref ref="GSM915216" />
+    <Sample-Ref ref="GSM915217" />
+    <Sample-Ref ref="GSM915218" />
+    <Sample-Ref ref="GSM915219" />
+    <Sample-Ref ref="GSM915220" />
+    <Sample-Ref ref="GSM915221" />
+    <Sample-Ref ref="GSM915222" />
+    <Sample-Ref ref="GSM915223" />
+    <Sample-Ref ref="GSM915224" />
+    <Sample-Ref ref="GSM915225" />
+    <Sample-Ref ref="GSM915226" />
+    <Supplementary-Data type="TXT">
+ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE37nnn/GSE37232/suppl/GSE37232_processed_data.txt.gz
+    </Supplementary-Data>
+    <Supplementary-Data type="SRA Study">
+ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByStudy/sra/SRP/SRP012/SRP012175
+    </Supplementary-Data>
+    <Relation type="SRA" target="http://www.ncbi.nlm.nih.gov/sra?term=SRP012175" />
+    <Relation type="BioProject" target="http://www.ncbi.nlm.nih.gov/bioproject/PRJNA159179" />
+  </Series>
+
+</MINiML>
