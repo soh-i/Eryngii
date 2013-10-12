@@ -7,9 +7,8 @@ use Data::Dumper;
 
 use lib qw{./lib/};
 use Metadata::Utils;
-use base q/Exporter/;
-our @EXPORT = qw/title to_gsm_ids pmid supp_data gsm_ids/;
 
+our @ISA = qw//;
 
 sub new {
     my $class = shift;
